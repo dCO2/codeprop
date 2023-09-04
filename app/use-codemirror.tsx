@@ -24,6 +24,19 @@ const useCodeMirror = <T extends Element>(
   useEffect(() => {
     if (!refContainer.current) return
 
+    const testTheme = EditorView.theme({
+      "&": {
+        fontSize: "12pt",
+      },
+      ".cm-content": {
+        fontFamily: "Menlo, Monaco, Lucida Console, monospace",
+        minHeight: "200px"
+      },
+      ".cm-gutters": {
+        minHeight: "200px"
+      },
+    });
+
     const startState = EditorState.create({
       doc: props.initialDoc,
       extensions: [
@@ -35,6 +48,7 @@ const useCodeMirror = <T extends Element>(
           addKeymap: true
         }),
         oneDark,
+        testTheme,
         EditorView.lineWrapping,
         EditorView.updateListener.of(update => {
           if (update.changes) {
